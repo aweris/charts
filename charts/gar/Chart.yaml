@@ -1,0 +1,10 @@
+apiVersion: v1
+appVersion: "2.169.1"
+description: A Helm chart for Self Hosted Github Actions Runner
+name: gar
+version: 0.1.0
+home: https://github.com/aweris/github-actions-runner
+icon: https://upload.wikimedia.org/wikipedia/commons/c/c6/Font_Awesome_5_brands_github-square.svg
+maintainers:
+  - name: aweris
+    email: ali@akca.io

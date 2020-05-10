@@ -1,0 +1,18 @@
+runner:
+  url: https://github.com/aweris/charts
+  image:
+    # Dirty workaround for ci testing.
+    # Since gar image requires valid PAT for startup
+    repository: containous/whoami
+    tag: latest
+  labels:
+    - foo
+    - bar
+
+extraVolumeMounts:
+  - name: cache
+    mountPath: /cache
+
+extraVolumes:
+  - name: cache
+    emptyDir: {}
