@@ -1,0 +1,88 @@
+name: ci
+
+on:
+  pull_request:
+    paths:
+      - 'charts/**'
+
+jobs:
+  lint-chart:
+    name: lint / charts
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+
+      - name: Run chart-testing (lint)
+        uses: helm/chart-testing-action@master
+        with:
+          command: lint
+          config: .github/ct.yaml
+
+  lint-docs:
+    name: lint / docs
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+
+      - name: Run helm-docs
+        uses: docker://jnorwood/helm-docs:latest
+
+      - name: Check docs
+        run: git diff --exit-code
+
+  kubeval-chart:
+    name: kubeval
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+
+      - name: Install Kubeval Helm plugin
+        run: helm plugin install https://github.com/instrumenta/helm-kubeval
+
+      - name: Run kubeval
+        run: ./scripts/kubeval.sh
+
+  install-chart:
+    name: test / charts
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Fetch history
+        run: git fetch --prune --unshallow
+
+      - name: Create kind cluster
+        uses: helm/kind-action@master
+        with:
+          installLocalPathProvisioner: true
+
+      - name: Chart testing (install)
+        uses: helm/chart-testing-action@master
+        with:
+          config: .github/ct.yamls
+          command: install
+
