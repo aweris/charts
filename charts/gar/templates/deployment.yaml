@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "gar.fullname" . }}
+  labels:
+  {{- include "gar.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+  {{- include "gar.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+    {{- include "gar.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "gar.serviceAccountName" . }}
+      {{- if .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}-runner
+          {{- if .Values.runner.securityContext }}
+          securityContext:
+            {{- toYaml .Values.runner.securityContext | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.runner.image.repository }}:{{ .Values.runner.image.tag }}"
+          imagePullPolicy: {{ .Values.runner.image.pullPolicy }}
+          {{- if .Values.runner.additionalArgs}}
+          args:
+            {{- range $index, $value := .Values.runner.additionalArgs }}
+            - {{ $value | quote }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.dind.resources }}
+          resources:
+            {{- toYaml .Values.runner.resources | nindent 12 }}
+          {{- end }}
+          env:
+            - name: DOCKER_HOST
+              value: tcp://localhost:2375
+            - name: REG_URL
+              value: {{ .Values.runner.url }}
+            - name: RUNNER_WORKDIR
+              value: {{ .Values.runner.workdir }}
+            {{- if .Values.runner.name }}
+            - name: RUNNER_NAME
+              value: {{ .Values.runner.name }}
+            {{- end }}
+            {{- if .Values.runner.labels }}
+            - name: RUNNER_LABELS
+              value: {{ include "runner.labels" . }}
+            {{- end }}
+            {{- if .Values.runner.ghTokenSecret }}
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  {{- toYaml .Values.runner.ghTokenSecret | nindent 18 }}
+            {{- end }}
+            {{- if .Values.extraEnvs }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- end }}
+          volumeMounts:
+            - mountPath: {{ .Values.runner.workdir }}
+              name: runner-workdir
+            {{- if .Values.extraVolumeMounts }}
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+        - name: {{ .Chart.Name }}-dind
+          {{- if .Values.dind.securityContext }}
+          securityContext:
+            {{- toYaml .Values.dind.securityContext | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.dind.image.repository }}:{{ .Values.dind.image.tag }}"
+          imagePullPolicy: {{ .Values.dind.image.pullPolicy }}
+          {{- if .Values.dind.resources }}
+          resources:
+            {{- toYaml .Values.dind.resources | nindent 12 }}
+          {{- end }}
+          env:
+            - name: DOCKER_TLS_CERTDIR
+              value: ''
+            {{- if .Values.extraEnvs }}
+            {{- toYaml .Values.extraEnvs | nindent 12 }}
+            {{- end }}
+          volumeMounts:
+            - mountPath: /var/lib/docker
+              name: dind-storage
+            - mountPath: {{ .Values.runner.workdir }}
+              name: runner-workdir
+            {{- if .Values.extraVolumeMounts }}
+            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- end }}
+      volumes:
+        - emptyDir: {}
+          name: dind-storage
+        - emptyDir: {}
+          name: runner-workdir
+        {{- if .Values.extraVolumes }}
+        {{- toYaml .Values.extraVolumes | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}

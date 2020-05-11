@@ -1,0 +1,160 @@
+# replicaCount -- Number of replicas of the runner pod
+replicaCount: 1
+
+# nameOverride -- String to partially override gar.fullname template with a string (will prepend the release name)
+nameOverride: ""
+
+# fullnameOverride -- String to fully override gar.fullname template with a string
+fullnameOverride: ""
+
+runner:
+  image:
+    # runner.image.repository -- Github actions runner image name
+    repository: aweris/gar
+    # runner.image.tag -- Github actions runner image tag
+    tag: 2.169.1
+    # runner.image.pullPolicy -- Image pull policy
+    pullPolicy: Always
+
+  # runner.url -- Repository or Organization url for runner registration
+  url:
+
+  # runner.name -- Name of the runner. If not set, new name generated
+  name:
+
+  # runner.workdir -- Working directory for the runner
+  workdir: /gar/work
+
+  # runner.labels -- Custom labels for the runner
+  labels: []
+
+  # runner.ghTokenSecret -- [runner.ghTokenSecret](#runnerghtokensecret)
+  ##
+  ## ghTokenSecret:
+  ##    key: GH_TOKEN
+  ##    name: secret-resource
+  ghTokenSecret: {}
+
+  # runner.additionalArgs -- [runner.additionalArgs](#runneradditionalargs)
+  ##
+  ## additionalArgs:
+  ##   - "--replace=false"
+  ##   - "--once"
+  additionalArgs: []
+
+  # runner.resources -- [resources](#resources)
+  ##
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube.
+  ##
+  ## resources:
+  ##   limits:
+  ##     cpu: 100m
+  ##     memory: 128Mi
+  ##   requests:
+  ##     cpu: 100m
+  ##     memory: 128Mi
+  resources: {}
+
+  # runner.securityContext -- [securityContext](#securitycontext)
+  ##
+  ## securityContext:
+  ##   capabilities:
+  ##     drop:
+  ##     - ALL
+  ##   readOnlyRootFilesystem: true
+  ##   runAsNonRoot: true
+  ##   runAsUser: 1000
+  securityContext: {}
+
+dind:
+  image:
+    # dind.image.repository -- DinD image name
+    repository: docker
+    # dind.image.tag -- DinD image tag
+    tag: 19.03-dind
+    # dind.image.pullPolicy -- Image pull policy
+    pullPolicy: Always
+
+  # dind.resources -- [resources](#resources)
+  ##
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube.
+  ##
+  ## resources:
+  ##   limits:
+  ##     cpu: 100m
+  ##     memory: 128Mi
+  ##   requests:
+  ##     cpu: 100m
+  ##     memory: 128Mi
+  resources: {}
+
+  # dind.securityContext -- [securityContext](#securitycontext)
+  # @default -- { privileged: true }
+  ##
+  ## securityContext:
+  ##   capabilities:
+  ##     drop:
+  ##     - ALL
+  ##   readOnlyRootFilesystem: true
+  ##   runAsNonRoot: true
+  ##   runAsUser: 1000
+  securityContext:
+    privileged: true
+
+serviceAccount:
+  # serviceAccount.create -- Specifies whether a service account should be created
+  create: true
+  # serviceAccount.annotations -- Annotations to add to the service account
+  annotations: {}
+  # serviceAccount.name -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
+  name:
+
+# podSecurityContext -- [podSecurityContext](#podsecuritycontext)
+##
+## podSecurityContext:
+##  fsGroup: 2000
+podSecurityContext: {}
+
+# extraEnvs -- [extraEnvs](#extraenvs)
+##
+## extraEnvs:
+##   - name: FOO
+##     valueFrom:
+##       secretKeyRef:
+##         key: FOO
+##         name: secret-resource
+##
+extraEnvs: []
+
+# extraVolumeMounts -- [extraVolumeMounts](#extravolumemounts)
+##
+## extraVolumeMounts:
+##   - name: extra-vol
+##     mountPath: /var/lib/vol
+##     subPath: ""
+##     readOnly: true
+extraVolumeMounts: []
+
+# extraVolumes -- [extraVolumes](#extravolumes)
+##
+## extraVolumes:
+##   - name: extra-vol
+##     emptyDir: {}
+##   - name: secret-files
+##     secret:
+##       secretName: very-secret
+extraVolumes: []
+
+# nodeSelector -- Node labels for pod assignment
+nodeSelector: {}
+# key: value
+
+# tolerations -- Toleration labels for pod assignment
+tolerations: []
+
+# affinity -- Affinity settings for pod assignment
+affinity: {}

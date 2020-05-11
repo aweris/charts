@@ -1,0 +1,143 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.versionLine" . }}
+
+{{ template "chart.sourceLinkLine" . }}
+
+## Installation
+
+### Add Helm repository
+
+```shell
+helm repo add aweris https://aweris.github.io/charts/
+helm repo update
+```
+
+### Install chart
+
+Create secret
+
+```shell
+kubectl create secret generic github-token --from-literal=GH_TOKEN=<PAT>
+```
+
+Create `values.yaml`
+
+```yaml
+runner:
+  url: https://github.com/<your-repo-goes-here>
+  labels:
+    - foo
+    - bar
+  ghTokenSecret:
+    key: GH_TOKEN
+    name: github-token
+```
+
+Install chart
+
+```shell
+helm upgrade --install --values values.yaml runner aweris/gar
+```
+
+{{ template "chart.valuesSection" . }}
+
+## Configuration Blocks
+
+#### runner.ghTokenSecret
+
+Secret name and key contains Personal access token for authenticate to GitHub
+
+```yaml
+ghTokenSecret:
+  key: GH_TOKEN
+  name: secret-resource
+```
+
+#### runner.additionalArgs
+
+Additional arguments to be passed at gar's binary
+
+```yaml
+additionalArgs:
+  - "--replace=false"
+  - "--once"
+```
+
+#### resources
+
+The [resources] to allocate for container. We usually recommend not to specify default resources and to leave this as a conscious
+choice for the user. This also increases chances charts run on environments with little
+resources, such as Minikube. For more info [Managing Resources for Containers](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)
+
+```yaml
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+```
+
+#### securityContext
+
+For more info [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
+
+```yaml
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+```
+
+#### podSecurityContext
+
+For more info [Set the security context for a Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)
+
+```yaml
+podSecurityContext:
+  fsGroup: 2000
+```
+
+#### extraEnvs
+
+Additional environment variables to set
+
+```yaml
+extraEnvs:
+  - name: FOO
+    valueFrom:
+      secretKeyRef:
+        key: FOO
+        name: secret-resource
+```
+
+#### extraVolumeMounts
+
+Additional volume mounts.
+
+```yaml
+extraVolumeMounts:
+  - name: extra-vol
+    mountPath: /var/lib/vol
+    subPath: ""
+    readOnly: true
+```
+
+#### extraVolumes
+
+Additional volumes.
+
+```yaml
+extraVolumes:
+  - name: extra-vol
+    emptyDir: {}
+  - name: secret-files
+    secret:
+      secretName: very-secret
+```
