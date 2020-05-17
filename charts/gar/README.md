@@ -72,7 +72,7 @@ helm upgrade --install my-runner aweris/gar --values values.yaml
 | runner.githubAuthSecret | string | `""` | Secret contains [Github authentication](#create-github-authentication-secret) for runner registration |
 | runner.image.pullPolicy | string | `"Always"` | Image pull policy |
 | runner.image.repository | string | `"aweris/gar"` | Github actions runner image name |
-| runner.image.tag | string | `"2.169.1"` | Github actions runner image tag |
+| runner.image.tag | string | `"2.262.1"` | Github actions runner image tag |
 | runner.labels | list | `[]` | Custom labels for the runner |
 | runner.name | string | `nil` | Name of the runner. If not set, new name generated |
 | runner.resources | object | `{}` | [resources](#resources) |

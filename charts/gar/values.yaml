@@ -12,7 +12,7 @@ runner:
     # runner.image.repository -- Github actions runner image name
     repository: aweris/gar
     # runner.image.tag -- Github actions runner image tag
-    tag: 2.169.1
+    tag: 2.262.1
     # runner.image.pullPolicy -- Image pull policy
     pullPolicy: Always
 
