@@ -14,46 +14,44 @@ helm repo add aweris https://aweris.github.io/charts/
 helm repo update
 ```
 
-### Install chart
+### Create Github Authentication Secret
 
-Create secret
+- Create secret using personal access token
 
 ```shell
-kubectl create secret generic github-token --from-literal=GH_TOKEN=<PAT>
+kubectl create secret generic github-auth --from-literal=pat=<PAT>
 ```
+
+- Create secret using Github application credentials
+
+```
+kubectl create secret generic  github-auth --from-literal=app-id=<Github Application ID> \
+                                           --from-literal=installation-id=<Github Application Installation ID> \
+                                           --from-file=private-key=<Path for the private key file>
+```
+
+### Install chart
 
 Create `values.yaml`
 
 ```yaml
 runner:
   url: https://github.com/<your-repo-goes-here>
+  githubAuthSecret: github-auth
   labels:
     - foo
     - bar
-  ghTokenSecret:
-    key: GH_TOKEN
-    name: github-token
 ```
 
 Install chart
 
 ```shell
-helm upgrade --install --values values.yaml runner aweris/gar
+helm upgrade --install my-runner aweris/gar --values values.yaml
 ```
 
 {{ template "chart.valuesSection" . }}
 
 ## Configuration Blocks
-
-#### runner.ghTokenSecret
-
-Secret name and key contains Personal access token for authenticate to GitHub
-
-```yaml
-ghTokenSecret:
-  key: GH_TOKEN
-  name: secret-resource
-```
 
 #### runner.additionalArgs
 

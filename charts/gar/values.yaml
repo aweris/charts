@@ -28,12 +28,8 @@ runner:
   # runner.labels -- Custom labels for the runner
   labels: []
 
-  # runner.ghTokenSecret -- [runner.ghTokenSecret](#runnerghtokensecret)
-  ##
-  ## ghTokenSecret:
-  ##    key: GH_TOKEN
-  ##    name: secret-resource
-  ghTokenSecret: {}
+  # runner.githubAuthSecret -- Secret contains [Github authentication](#create-github-authentication-secret) for runner registration
+  githubAuthSecret: ""
 
   # runner.additionalArgs -- [runner.additionalArgs](#runneradditionalargs)
   ##

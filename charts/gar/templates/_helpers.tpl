@@ -65,3 +65,10 @@ Create the name of the service account to use
 {{- define "runner.labels" -}}
 {{- join "," .Values.runner.labels }}
 {{- end -}}
+
+{{/*
+Checks and returns github authentication secret name
+*/}}
+{{- define "runner.github.auth.secret" -}}
+{{ .Values.runner.githubAuthSecret | required "A valid runner.githubAuthSecret is required!"}}
+{{- end -}}
