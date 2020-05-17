@@ -31,13 +31,13 @@ runner:
   # runner.githubAuthSecret -- Secret contains [Github authentication](#create-github-authentication-secret) for runner registration
   githubAuthSecret: ""
 
-  # runner.additionalArgs -- [runner.additionalArgs](#runneradditionalargs)
+  # runner.additionalArgs -- [Additional Arguments](#additional-arguments)
   additionalArgs: []
 
-  # runner.resources -- [resources](#resources)
+  # runner.resources -- [Resources](#resources)
   resources: {}
 
-  # runner.securityContext -- [securityContext](#securitycontext)
+  # runner.securityContext -- [Security Context](#security-context)
   securityContext: {}
 
 dind:
@@ -49,10 +49,10 @@ dind:
     # dind.image.pullPolicy -- Image pull policy
     pullPolicy: Always
 
-  # dind.resources -- [resources](#resources)
+  # dind.resources -- [Resources](#resources)
   resources: {}
 
-  # dind.securityContext -- [securityContext](#securitycontext)
+  # dind.securityContext -- [Security Context](#security-context)
   # @default -- { privileged: true }
   securityContext:
     privileged: true
@@ -65,16 +65,16 @@ serviceAccount:
   # serviceAccount.name -- The name of the service account to use. If not set and create is true, a name is generated using the fullname template
   name:
 
-# podSecurityContext -- [podSecurityContext](#podsecuritycontext)
+# podSecurityContext -- [Pod Security Context](#pod-security-context)
 podSecurityContext: {}
 
-# extraEnvs -- [extraEnvs](#extraenvs)
+# extraEnvs -- [Extra Environment Variables](#extra-environment-variables)
 extraEnvs: []
 
-# extraVolumeMounts -- [extraVolumeMounts](#extravolumemounts)
+# extraVolumeMounts -- [Extra Volume Mounts](#extra-volume-mounts)
 extraVolumeMounts: []
 
-# extraVolumes -- [extraVolumes](#extravolumes)
+# extraVolumes -- [Extra Volumes](#extra-volumes)
 extraVolumes: []
 
 # nodeSelector -- Node labels for pod assignment

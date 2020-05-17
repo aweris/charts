@@ -58,25 +58,25 @@ helm upgrade --install my-runner aweris/gar --values values.yaml
 | dind.image.pullPolicy | string | `"Always"` | Image pull policy |
 | dind.image.repository | string | `"docker"` | DinD image name |
 | dind.image.tag | string | `"19.03-dind"` | DinD image tag |
-| dind.resources | object | `{}` | [resources](#resources) |
-| dind.securityContext | object | { privileged: true } | [securityContext](#securitycontext) |
-| extraEnvs | list | `[]` | [extraEnvs](#extraenvs) |
-| extraVolumeMounts | list | `[]` | [extraVolumeMounts](#extravolumemounts) |
-| extraVolumes | list | `[]` | [extraVolumes](#extravolumes) |
+| dind.resources | object | `{}` | [Resources](#resources) |
+| dind.securityContext | object | { privileged: true } | [Security Context](#security-context) |
+| extraEnvs | list | `[]` | [Extra Environment Variables](#extra-environment-variables) |
+| extraVolumeMounts | list | `[]` | [Extra Volume Mounts](#extra-volume-mounts) |
+| extraVolumes | list | `[]` | [Extra Volumes](#extra-volumes) |
 | fullnameOverride | string | `""` | String to fully override gar.fullname template with a string |
 | nameOverride | string | `""` | String to partially override gar.fullname template with a string (will prepend the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
-| podSecurityContext | object | `{}` | [podSecurityContext](#podsecuritycontext) |
+| podSecurityContext | object | `{}` | [Pod Security Context](#pod-security-context) |
 | replicaCount | int | `1` | Number of replicas of the runner pod |
-| runner.additionalArgs | list | `[]` | [runner.additionalArgs](#runneradditionalargs) |
+| runner.additionalArgs | list | `[]` | [Additional Arguments](#additional-arguments) |
 | runner.githubAuthSecret | string | `""` | Secret contains [Github authentication](#create-github-authentication-secret) for runner registration |
 | runner.image.pullPolicy | string | `"Always"` | Image pull policy |
 | runner.image.repository | string | `"aweris/gar"` | Github actions runner image name |
 | runner.image.tag | string | `"2.262.1"` | Github actions runner image tag |
 | runner.labels | list | `[]` | Custom labels for the runner |
 | runner.name | string | `nil` | Name of the runner. If not set, new name generated |
-| runner.resources | object | `{}` | [resources](#resources) |
-| runner.securityContext | object | `{}` | [securityContext](#securitycontext) |
+| runner.resources | object | `{}` | [Resources](#resources) |
+| runner.securityContext | object | `{}` | [Security Context](#security-context) |
 | runner.url | string | `nil` | Repository or Organization url for runner registration |
 | runner.workdir | string | `"/gar/work"` | Working directory for the runner |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
@@ -86,7 +86,7 @@ helm upgrade --install my-runner aweris/gar --values values.yaml
 
 ## Configuration Blocks
 
-#### runner.additionalArgs
+#### Additional Arguments
 
 Additional arguments to be passed at gar's binary
 
@@ -96,7 +96,7 @@ additionalArgs:
   - "--once"
 ```
 
-#### resources
+#### Resources
 
 The [resources] to allocate for container. We usually recommend not to specify default resources and to leave this as a conscious
 choice for the user. This also increases chances charts run on environments with little
@@ -112,7 +112,7 @@ resources:
     memory: 128Mi
 ```
 
-#### securityContext
+#### Security Context
 
 For more info [Security Context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 
@@ -126,7 +126,7 @@ securityContext:
   runAsUser: 1000
 ```
 
-#### podSecurityContext
+#### Pod Security Context
 
 For more info [Set the security context for a Pod](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod)
 
@@ -135,7 +135,7 @@ podSecurityContext:
   fsGroup: 2000
 ```
 
-#### extraEnvs
+#### Extra Environment Variables
 
 Additional environment variables to set
 
@@ -148,7 +148,7 @@ extraEnvs:
         name: secret-resource
 ```
 
-#### extraVolumeMounts
+#### Extra Volume Mounts
 
 Additional volume mounts.
 
@@ -160,7 +160,7 @@ extraVolumeMounts:
     readOnly: true
 ```
 
-#### extraVolumes
+#### Extra Volumes
 
 Additional volumes.
 
