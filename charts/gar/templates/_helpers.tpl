@@ -65,3 +65,23 @@ Create the name of the service account to use
 {{- define "runner.labels" -}}
 {{- join "," .Values.runner.labels }}
 {{- end -}}
+
+{{/*
+Returns true, if new secret should created
+*/}}
+{{- define "github.createSecret" -}}
+{{- if not .Values.runner.ghAuth.existingSecret -}}
+{{ true }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Returns secret name for github authentication
+*/}}
+{{- define "github.secretName" -}}
+{{- if include "github.createSecret" . -}}
+{{ printf "%s-gh-auth" (include "gar.fullname" .)  }}
+{{- else -}}
+{{ .Values.runner.ghAuth.existingSecret }}
+{{- end -}}
+{{- end -}}

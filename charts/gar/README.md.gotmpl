@@ -14,13 +14,15 @@ helm repo add aweris https://aweris.github.io/charts/
 helm repo update
 ```
 
-### Install chart
+### Create Github Authentication Secret
 
-Create secret
+- Create secret using personal access token
 
 ```shell
-kubectl create secret generic github-token --from-literal=GH_TOKEN=<PAT>
+kubectl create secret generic github-auth --from-literal=pat=<PAT>
 ```
+
+### Install chart
 
 Create `values.yaml`
 
@@ -30,9 +32,8 @@ runner:
   labels:
     - foo
     - bar
-  ghTokenSecret:
-    key: GH_TOKEN
-    name: github-token
+  ghAuth:
+    existingSecret: github-auth
 ```
 
 Install chart

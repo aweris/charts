@@ -8,6 +8,8 @@ runner:
   labels:
     - foo
     - bar
+  ghAuth:
+    pat: very-fake-pat
 
 extraVolumeMounts:
   - name: cache

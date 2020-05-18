@@ -28,8 +28,11 @@ runner:
   # runner.labels -- Custom labels for the runner
   labels: []
 
-  # runner.ghTokenSecret -- [runner.ghTokenSecret](#runnerghtokensecret)
-  ghTokenSecret: {}
+  ghAuth:
+    # runner.ghAuth.existingSecret -- Secret contains [Github authentication](#create-github-authentication-secret) for runner registration
+    existingSecret: ""
+    # runner.ghAuth.pat -- Personal access token for Github Authentication. Value will overridden by `runner.ghAuth.existingSecret`
+    pat: ""
 
   # runner.additionalArgs -- [runner.additionalArgs](#runneradditionalargs)
   additionalArgs: []

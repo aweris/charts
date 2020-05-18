@@ -52,12 +52,11 @@ spec:
             - name: RUNNER_LABELS
               value: {{ include "runner.labels" . }}
             {{- end }}
-            {{- if .Values.runner.ghTokenSecret }}
             - name: GITHUB_TOKEN
               valueFrom:
                 secretKeyRef:
-                  {{- toYaml .Values.runner.ghTokenSecret | nindent 18 }}
-            {{- end }}
+                  name: {{ include "github.secretName" . }}
+                  key: pat
             {{- if .Values.extraEnvs }}
             {{- toYaml .Values.extraEnvs | nindent 12 }}
             {{- end }}
