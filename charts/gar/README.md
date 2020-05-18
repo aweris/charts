@@ -2,7 +2,7 @@ gar
 ===
 A Helm chart for Self Hosted Github Actions Runner
 
-Current chart version is `0.1.0`
+Current chart version is `0.1.1`
 
 Source code can be found [here](https://github.com/aweris/github-actions-runner)
 
