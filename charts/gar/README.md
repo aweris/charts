@@ -84,7 +84,7 @@ helm upgrade --install --values values.yaml runner aweris/gar
 | runner.resources | object | `{}` | [Resources](#resources) |
 | runner.securityContext | object | `{}` | [Security Context](#security-context) |
 | runner.url | string | `nil` | Repository or Organization url for runner registration |
-| runner.workdir | string | `"/gar/work"` | Working directory for the runner |
+| runner.workdir | string | `"/home/runner/work"` | Working directory for the runner |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
 | serviceAccount.name | string | `nil` | The name of the service account to use. If not set and create is true, a name is generated using the fullname template |

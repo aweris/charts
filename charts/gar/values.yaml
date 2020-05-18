@@ -23,7 +23,7 @@ runner:
   name:
 
   # runner.workdir -- Working directory for the runner
-  workdir: /gar/work
+  workdir: /home/runner/work
 
   # runner.labels -- Custom labels for the runner
   labels: []
