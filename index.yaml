@@ -1,14 +1,29 @@
 apiVersion: v1
 entries:
+  gar:
+  - apiVersion: v1
+    appVersion: 2.169.1
+    created: "2020-05-18T07:38:32.384913359Z"
+    description: A Helm chart for Self Hosted Github Actions Runner
+    digest: 7a897873fe35e2d6e7bb4bdde6dd63fce1338e554411b4073bd927b8c5c83918
+    home: https://github.com/aweris/github-actions-runner
+    icon: https://upload.wikimedia.org/wikipedia/commons/c/c6/Font_Awesome_5_brands_github-square.svg
+    maintainers:
+    - email: ali@akca.io
+      name: aweris
+    name: gar
+    urls:
+    - https://github.com/aweris/charts/releases/download/gar-0.1.1/gar-0.1.1.tgz
+    version: 0.1.1
   whoami:
-    - apiVersion: v2
-      appVersion: 2.169.1
-      created: "2020-05-11T12:00:00.56755672Z"
-      description: A Helm chart for Kubernetes
-      digest: 1ce493670f6ee60e771780a8ee2ff3be7731524046f21bc1125db11eb14078bf
-      name: gar
-      type: application
-      urls:
-        - https://github.com/aweris/charts/releases/download/gar-0.1.0/gar-0.1.0.tgz
-      version: 0.1.0
+  - apiVersion: v2
+    appVersion: 2.169.1
+    created: "2020-05-11T12:00:00.56755672Z"
+    description: A Helm chart for Kubernetes
+    digest: 1ce493670f6ee60e771780a8ee2ff3be7731524046f21bc1125db11eb14078bf
+    name: gar
+    type: application
+    urls:
+    - https://github.com/aweris/charts/releases/download/gar-0.1.0/gar-0.1.0.tgz
+    version: 0.1.0
 generated: "2020-05-10T12:00:00.444961569Z"
