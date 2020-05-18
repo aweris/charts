@@ -29,43 +29,15 @@ runner:
   labels: []
 
   # runner.ghTokenSecret -- [runner.ghTokenSecret](#runnerghtokensecret)
-  ##
-  ## ghTokenSecret:
-  ##    key: GH_TOKEN
-  ##    name: secret-resource
   ghTokenSecret: {}
 
   # runner.additionalArgs -- [runner.additionalArgs](#runneradditionalargs)
-  ##
-  ## additionalArgs:
-  ##   - "--replace=false"
-  ##   - "--once"
   additionalArgs: []
 
   # runner.resources -- [resources](#resources)
-  ##
-  ## We usually recommend not to specify default resources and to leave this as a conscious
-  ## choice for the user. This also increases chances charts run on environments with little
-  ## resources, such as Minikube.
-  ##
-  ## resources:
-  ##   limits:
-  ##     cpu: 100m
-  ##     memory: 128Mi
-  ##   requests:
-  ##     cpu: 100m
-  ##     memory: 128Mi
   resources: {}
 
   # runner.securityContext -- [securityContext](#securitycontext)
-  ##
-  ## securityContext:
-  ##   capabilities:
-  ##     drop:
-  ##     - ALL
-  ##   readOnlyRootFilesystem: true
-  ##   runAsNonRoot: true
-  ##   runAsUser: 1000
   securityContext: {}
 
 dind:
@@ -78,30 +50,10 @@ dind:
     pullPolicy: Always
 
   # dind.resources -- [resources](#resources)
-  ##
-  ## We usually recommend not to specify default resources and to leave this as a conscious
-  ## choice for the user. This also increases chances charts run on environments with little
-  ## resources, such as Minikube.
-  ##
-  ## resources:
-  ##   limits:
-  ##     cpu: 100m
-  ##     memory: 128Mi
-  ##   requests:
-  ##     cpu: 100m
-  ##     memory: 128Mi
   resources: {}
 
   # dind.securityContext -- [securityContext](#securitycontext)
   # @default -- { privileged: true }
-  ##
-  ## securityContext:
-  ##   capabilities:
-  ##     drop:
-  ##     - ALL
-  ##   readOnlyRootFilesystem: true
-  ##   runAsNonRoot: true
-  ##   runAsUser: 1000
   securityContext:
     privileged: true
 
@@ -114,39 +66,15 @@ serviceAccount:
   name:
 
 # podSecurityContext -- [podSecurityContext](#podsecuritycontext)
-##
-## podSecurityContext:
-##  fsGroup: 2000
 podSecurityContext: {}
 
 # extraEnvs -- [extraEnvs](#extraenvs)
-##
-## extraEnvs:
-##   - name: FOO
-##     valueFrom:
-##       secretKeyRef:
-##         key: FOO
-##         name: secret-resource
-##
 extraEnvs: []
 
 # extraVolumeMounts -- [extraVolumeMounts](#extravolumemounts)
-##
-## extraVolumeMounts:
-##   - name: extra-vol
-##     mountPath: /var/lib/vol
-##     subPath: ""
-##     readOnly: true
 extraVolumeMounts: []
 
 # extraVolumes -- [extraVolumes](#extravolumes)
-##
-## extraVolumes:
-##   - name: extra-vol
-##     emptyDir: {}
-##   - name: secret-files
-##     secret:
-##       secretName: very-secret
 extraVolumes: []
 
 # nodeSelector -- Node labels for pod assignment
