@@ -33,6 +33,12 @@ runner:
     existingSecret: ""
     # runner.ghAuth.pat -- Personal access token for Github Authentication. Value will overridden by `runner.ghAuth.existingSecret`
     pat: ""
+    # runner.ghAuth.appId -- Github Application ID. Value will overridden by `runner.ghAuth.existingSecret`
+    appId:
+    # runner.ghAuth.installationId -- Github application installation ID. Value will overridden by `runner.ghAuth.existingSecret`
+    installationId:
+    # runner.ghAuth.privateKey -- Private key for authenticate as Github application. Value will overridden by `runner.ghAuth.existingSecret`
+    privateKey: ""
 
   # runner.additionalArgs -- [runner.additionalArgs](#runneradditionalargs)
   additionalArgs: []

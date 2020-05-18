@@ -57,12 +57,30 @@ spec:
                 secretKeyRef:
                   name: {{ include "github.secretName" . }}
                   key: pat
+                  optional: true
+            - name: GITHUB_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "github.secretName" .}}
+                  key: appId
+                  optional: true
+            - name: GITHUB_APP_INSTALLATION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "github.secretName" .}}
+                  key: installationId
+                  optional: true
+            - name: GITHUB_APP_PRIVATE_KEY_PATH
+              value: /gar/secret/github/private-key.pem
             {{- if .Values.extraEnvs }}
             {{- toYaml .Values.extraEnvs | nindent 12 }}
             {{- end }}
           volumeMounts:
             - mountPath: {{ .Values.runner.workdir }}
               name: runner-workdir
+            - mountPath: /gar/secret/github/private-key.pem
+              subPath: privateKey
+              name: github-private-key
             {{- if .Values.extraVolumeMounts }}
             {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
             {{- end }}
@@ -96,6 +114,9 @@ spec:
           name: dind-storage
         - emptyDir: {}
           name: runner-workdir
+        - secret:
+           secretName: {{ include "github.secretName" . }}
+          name: github-private-key
         {{- if .Values.extraVolumes }}
         {{- toYaml .Values.extraVolumes | nindent 8 }}
         {{- end }}

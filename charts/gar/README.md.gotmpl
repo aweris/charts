@@ -22,6 +22,15 @@ helm repo update
 kubectl create secret generic github-auth --from-literal=pat=<PAT>
 ```
 
+
+- Create secret using Github application credentials
+
+```
+kubectl create secret generic  github-auth --from-literal=appId=<Github Application ID> \
+                                           --from-literal=installationId=<Github Application Installation ID> \
+                                           --from-file=privateKey=<Path for the private key file>
+```
+
 ### Install chart
 
 Create `values.yaml`
