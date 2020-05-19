@@ -86,6 +86,9 @@ extraVolumeMounts: []
 # extraVolumes -- [Extra Volumes](#extra-volumes)
 extraVolumes: []
 
+# extraVolumeClaimTemplates -- [Extra Volume Claim Templates](#extra-volume-claim-templates)
+extraVolumeClaimTemplates: []
+
 # nodeSelector -- Node labels for pod assignment
 nodeSelector: {}
 # key: value
