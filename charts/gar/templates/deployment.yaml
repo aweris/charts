@@ -33,7 +33,7 @@ spec:
             - {{ $value | quote }}
             {{- end }}
           {{- end }}
-          {{- if .Values.dind.resources }}
+          {{- if .Values.runner.resources }}
           resources:
             {{- toYaml .Values.runner.resources | nindent 12 }}
           {{- end }}
