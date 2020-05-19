@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "gar.fullname" . }}
   labels:
   {{- include "gar.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  serviceName: {{ include "gar.fullname" . }}
   selector:
     matchLabels:
   {{- include "gar.selectorLabels" . | nindent 6 }}
