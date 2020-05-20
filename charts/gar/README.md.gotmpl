@@ -141,3 +141,16 @@ extraVolumes:
     secret:
       secretName: very-secret
 ```
+
+#### Extra Volume Claim Templates
+
+```yaml
+extraVolumeClaimTemplates:
+  - metadata:
+      name: storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+```

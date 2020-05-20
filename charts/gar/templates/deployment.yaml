@@ -1,11 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "gar.fullname" . }}
   labels:
   {{- include "gar.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  serviceName: {{ include "gar.fullname" . }}
   selector:
     matchLabels:
   {{- include "gar.selectorLabels" . | nindent 6 }}
@@ -19,6 +20,7 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       {{- end }}
+      terminationGracePeriodSeconds: 30
       containers:
         - name: {{ .Chart.Name }}-runner
           {{- if .Values.runner.securityContext }}
@@ -33,7 +35,7 @@ spec:
             - {{ $value | quote }}
             {{- end }}
           {{- end }}
-          {{- if .Values.dind.resources }}
+          {{- if .Values.runner.resources }}
           resources:
             {{- toYaml .Values.runner.resources | nindent 12 }}
           {{- end }}
@@ -132,3 +134,7 @@ spec:
       tolerations:
       {{- toYaml . | nindent 8 }}
       {{- end }}
+  {{- if .Values.extraVolumeClaimTemplates }}
+  volumeClaimTemplates:
+    {{- toYaml .Values.extraVolumeClaimTemplates | nindent 4 }}
+  {{- end }}

@@ -2,7 +2,7 @@ gar
 ===
 A Helm chart for Self Hosted Github Actions Runner
 
-Current chart version is `0.1.2`
+Current chart version is `0.1.3`
 
 Source code can be found [here](https://github.com/aweris/github-actions-runner)
 
@@ -63,6 +63,7 @@ helm upgrade --install --values values.yaml runner aweris/gar
 | dind.resources | object | `{}` | [Resources](#resources) |
 | dind.securityContext | object | { privileged: true } | [Security Context](#security-context) |
 | extraEnvs | list | `[]` | [Extra Environment Variables](#extra-environment-variables) |
+| extraVolumeClaimTemplates | list | `[]` | [Extra Volume Claim Templates](#extra-volume-claim-templates) |
 | extraVolumeMounts | list | `[]` | [Extra Volume Mounts](#extra-volume-mounts) |
 | extraVolumes | list | `[]` | [Extra Volumes](#extra-volumes) |
 | fullnameOverride | string | `""` | String to fully override gar.fullname template with a string |
@@ -177,4 +178,17 @@ extraVolumes:
   - name: secret-files
     secret:
       secretName: very-secret
+```
+
+#### Extra Volume Claim Templates
+
+```yaml
+extraVolumeClaimTemplates:
+  - metadata:
+      name: storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
 ```
